@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "siamese-qc"
+version = "0.1.0"
+description = "Inference-only quality control for femoral trochlear notch detection"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "pyarrow>=10", "torch>=2.2", "torchvision>=0.17", "SimpleITK>=2.2"]
+
+[project.optional-dependencies]
+hub = ["huggingface_hub>=0.23"]
+export = ["joblib>=1.2", "scikit-learn>=1.1"]
+
+[project.scripts]
+siamese-qc = "siamese_qc.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["siamese_qc*"]

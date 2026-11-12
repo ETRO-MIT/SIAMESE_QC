@@ -1,0 +1,7 @@
+# Core inference dependencies, pinned to the supplied environment.
+# Install with: python -m pip install -r requirements.txt
+numpy==1.26.4
+torch==2.2.2
+torchvision==0.17.2
+SimpleITK==2.4.0
+pyarrow==21.0.0

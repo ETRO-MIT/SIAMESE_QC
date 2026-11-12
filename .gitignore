@@ -1,0 +1,14 @@
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.venv/
+.DS_Store
+weights/
+outputs/
+*.pth
+*.joblib
+*.npz
+*.mha
+*.mhd
+*.dcm
+*.parquet
