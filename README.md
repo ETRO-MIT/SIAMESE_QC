@@ -2,7 +2,7 @@
 
 <p align="center">
   <!-- <a href="<PAPER_OR_PROJECT_URL>"><img src="https://img.shields.io/badge/Paper-<VENUE_OR_YEAR>-B31B1B.svg" alt="Paper"></a> -->
-  <a href="https://github.com/ETRO-MIT/SIAMESE_QC?tab=Apache-2.0-1-ov-file"><img src="https://img.shields.io/badge/License-<LICENSE>-blue.svg" alt="License"></a>
+  <a href="https://github.com/ETRO-MIT/SIAMESE_QC?tab=Apache-2.0-1-ov-file"><img src="https://img.shields.io/badge/License-Apache-2.0-blue.svg" alt="License"></a>
 
 </p>
 
