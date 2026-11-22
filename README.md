@@ -114,6 +114,36 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Place the following assets in `weights/` for local inference. Use the following directory structure (filenames are the 
+proposed release names):
+
+```text
+weights/
+├── Siamese/
+│   ├── Weights/
+│   │   └── siamese_euclidean_2p5mm.pth
+│   └── Library/
+│       └── loe_euclidean.parquet
+├── Classification/
+│   ├── Weights/
+│   │   └── classification.pth
+│   └── Isotonic weights/
+│       └── classification_calibration.json
+└── Regression/
+    └── Weights/
+        └── regression.pth
+```
+
+| Method          | Required assets                                                                    |
+|-----------------|------------------------------------------------------------------------------------|
+| LoE (Euclidean) | `siamese_euclidean_2p5mm.pth` and `loe_euclidean.parquet`                          |
+| Regression      | `regression.pth`                                                                   |
+| Classification  | `classification.pth`; add `classification_calibration.json` for distance estimates |
+
+The three checkpoints and supplementary files will be supplied through Hugging Face. Be sure to add each element on the 
+corresponding directory.  
+
+
 ## Quickstart
 
 Before running inference, provide:
@@ -141,8 +171,42 @@ For raster images or images without calibrated spacing metadata, provide `--spac
 with the bilateral condylar endpoint coordinates. The output CSV preserves the input rows and adds the QC score and
 decision; `inaccurate=True` means the detection should be flagged for review.
 
-## Results
+### Running the demo
 
+[`demo.py`](demo.py) runs quality control on both knees of publicly available case `34_0` of Mendeley dataset. 
+
+Download the radiograph from the [Mendeley dataset](https://data.mendeley.com/datasets/bpvj6xczm2/3) and place the original grayscale image at `examples/34_0.png`, or pass its path with `--image`.
+
+Do not resize, crop, mirror, or rotate the image. The demo expects the original 2860 x 6951 pixel image because its
+built-in landmark coordinates and knee regions refer to that image.
+
+The required model assets must already be placed in `weights/`:
+
+- LoE: `weights/Siamese/Weights/siamese_euclidean_2p5mm.pth` and
+  `weights/Siamese/Library/loe_euclidean.parquet`
+- Regression: `weights/Regression/Weights/regression.pth`
+- Classification: `weights/Classification/Weights/classification.pth`
+
+From the repository root, view the available options and run the default LoE demo:
+
+```bash
+python demo.py --help
+python demo.py --method loe --device cpu
+```
+
+To use a different image or override an asset path:
+
+```bash
+python demo.py --image /path/to/34_0.png --method loe --device cpu
+python demo.py --method regression --weights /path/to/regression.pth --device cpu
+python demo.py --method classification --weights /path/to/classification.pth --device cpu
+```
+
+For classification, optional calibration can be supplied with `--calibration /path/to/classification_calibration.json`.
+The demo estimates spacing from the built-in bilateral condylar coordinates and writes the knee results to
+`outputs/demo.csv` by default. Use `--output /path/to/results.csv` to choose another output file.
+
+## Results
 
 The approach was evaluated on full-leg radiographs targeting the femoral trochlear notch, optimized key hyperparameters, and compared via two inference strategies: 
 
