@@ -1,7 +1,7 @@
 # SIAMESE_QC
 
 <p align="center">
-  <!-- <a href="<PAPER_OR_PROJECT_URL>"><img src="https://img.shields.io/badge/Paper-<VENUE_OR_YEAR>-B31B1B.svg" alt="Paper"></a> -->
+  <a href="https://www.sciencedirect.com/science/article/pii/S0952197626029659"><img src="https://img.shields.io/badge/Paper-2026-B31B1B.svg" alt="Paper"></a>
   <a href="https://github.com/ETRO-MIT/SIAMESE_QC?tab=Apache-2.0-1-ov-file"><img src="https://img.shields.io/badge/License-Apache2.0-blue.svg" alt="License"></a>
 
 </p>
@@ -13,13 +13,16 @@
 
 ## Table of Contents
 
-- [About](#about) <!-- - [Citation](#citation) -->
+- [About](#about) 
+- [Citation](#citation)
+- [Tested Environment](#tested-environment)
 - [Repository Structure](#repository-structure)
 - [Installing Dependencies](#installing-dependencies)
 - [Quickstart](#quickstart)
 - [Results](#results)
 - [License](#license)
-- [Contact](#contact) <!-- - [Acknowledgements](#acknowledgements) -->
+- [Contact](#contact) 
+- [Acknowledgements](#acknowledgements)
 - [Disclaimer](#disclaimer)
 
 
@@ -31,22 +34,41 @@ Using a contrastive loss, the network learns a shared embedding space from image
 
 This repository provides:
 
-- Inference code for quality control of supplied femoral trochlear notch detections in full-leg radiographs; landmark coordinates must be provided by an external detector.
+- Inference code for quality control of supplied femoral trochlear notch detections in full-leg radiographs; landmark coordinates must be provided by an [external detector](https://github.com/ETRO-MIT/LowerLimbMalalignment-SGR).
 - Three inference methods: Siamese embedding comparison against a reference library (LoE), direct error regression, and inaccurate-detection classification.
 - Image preprocessing and patch extraction, with outputs including QC scores, review flags, and supported localization-error estimates.
 
 
-<!-- ## Citation
-<!-- TODO: Add the project's BibTeX citation and publication details. 
+## Citation
 
-If you use this code, data, or models, please cite:
+If you use this code, please cite:
 
 ```bibtex
-<PASTE_BIBTEX_ENTRY_HERE>
+@article{AMADORSANCHEZ2027116681,
+title = {Quality control of anatomical landmark detection in lower-limb radiographs using Siamese similarity-embedding comparisons},
+journal = {Engineering Applications of Artificial Intelligence},
+volume = {187},
+pages = {116681},
+year = {2027},
+issn = {0952-1976},
+doi = {https://doi.org/10.1016/j.engappai.2026.116681},
+url = {https://www.sciencedirect.com/science/article/pii/S0952197626029659},
+author = {Sebastián {Amador Sánchez} and Philippe {Van Overschelde} and Jef Vandemeulebroucke},
 ```
 
-Project publication: [<PAPER_TITLE>](<PAPER_OR_PROJECT_URL>) -->
+Project publication: [Quality control of anatomical landmark detection in lower-limb radiographs using Siamese similarity-embedding comparisons](https://www.sciencedirect.com/science/article/pii/S0952197626029659)
 
+
+## Tested Environment
+
+| Component | Version |
+| --- | --- |
+| Operating system | macOS/Linux |
+| Python | >=3.10 |
+| PyTorch | >=2.2 |
+| SimpleITK | >=2.4.0 |
+
+For the complete dependency list, see pyproject.toml or requirements.txt.
 
 ## Repository Structure
 
@@ -78,7 +100,6 @@ Clone the repository and create the test environment:
 ```bash
 python -m venv .venv
 source .venv/bin/activate       # Linux/macOS
-# .venv\\Scripts\\activate     # Windows
 ```
 Install the package from the repository root:
 
@@ -98,7 +119,7 @@ pip install -r requirements.txt
 Before running inference, provide:
 
 - A full-leg radiograph ; the repository does not include radiographs.
-- Landmark coordinates and knee bounding boxes produced by an external detector, saved as `detections.csv` in the original image's pixel coordinates.
+- Landmark coordinates and knee bounding boxes produced by an [external detector](https://github.com/ETRO-MIT/LowerLimbMalalignment-SGR), saved as `detections.csv` in the original image's pixel coordinates.
 
 For example, `detections.csv` should contain:
 
@@ -133,16 +154,21 @@ The clinical relevance of localization errors was assessed using directional lan
 The performance of the LoE methodology is illustrated in the figure below. The landmark-detection algorithm achieved high accuracy, with a median Euclidean distance
 error of 1.00 mm (IQR: 0.73–1.32 mm).
 
-<p align="center">
+<figure style="text-align: center;">
   <img src="assets/Comparrison_of_Euclidean_localization_error.png" alt="comparison_euc_local" overview figure" style="max-width: px1200; max-height: 400px">
-</p>
+  <figcaption><strong>Figure 1:</strong>Comparison of the Euclidean localization error produced by the landmark detection algorithm (y-axis) with the
+  distance estimated by the Siamese network using the Library of embeddings (x-axis).</figcaption>
+</figure>
 
 Below figure shows the highest CPAK class-change
 rates on both leg sides. 
 
-<p align="center">
-  <img src="assets/cpak_class_change_rate.png" alt="cpak_change_rate" overview figure" style="max-width: px1200; max-height: 400px">
-</p>
+<figure style="text-align: center;">
+  <img src="assets/cpak_class_change_rate.png" alt="CPAK class-change rate following controlled trochlear-notch displacement" style="max-width: px1200; max-height: 400px;">
+  <figcaption><strong>Figure 2:</strong> CPAK class-change rate following controlled displacement of the ground-truth femoral trochlear notch. Medial
+  and lateral perturbations produced more class changes than superior and inferior perturbations, with changes exceeding
+  10% of cases at 2.0 mm.</figcaption>
+</figure>
 
 
 ## License
@@ -157,15 +183,13 @@ The code is released under [Apache License 2.0](https://www.apache.org/licenses/
 - Email: sebastian.amador.sanchez@vub.be
 
 
-<!-- ## Acknowledgements
-<!-- TODO: Add funding, collaborators, and their contributions, or remove this section.
+## Acknowledgements
+
 <p align="left">
   <img src="assets/VUB-ETRO_RGB.png" alt="VUB-ETRO Department logo" width="120">
 </p>
 
-This work was supported by <FUNDING_BODY_OR_PROJECT>.
-
-We thank <COLLABORATORS_OR_INSTITUTIONS> for <CONTRIBUTION_DESCRIPTION>. -->
+The presented job was funded by the Innoviris grant [BHF / 2020-RDIR-6a] of the Brussels-Capital Region, as part of the project ANTICIPATE on Augmented Intelligence in Orthopaedics Treatments. All authors approved the version of the manuscript to be published.
 
 
 ## Disclaimer
